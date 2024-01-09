@@ -25,39 +25,15 @@ public class Main {
         }).start();
 
         Thread threadA = new Thread(() -> {
-            char letter = 'a';
-            long maxLength;
-            try {
-                maxLength = findLetter(maxA, letter);
-            } catch (InterruptedException e) {
-                System.out.printf("Thread %s interrupted \n" + Thread.currentThread().getName());
-                maxLength = -1;
-            }
-            System.out.printf("Максимальное количество символов %s в тексте %d \n", letter, maxLength);
+            countLetter(maxA,'a');
         });
 
         Thread threadB = new Thread(() -> {
-            char letter = 'b';
-            long maxLength;
-            try {
-                maxLength = findLetter(maxB, letter);
-            } catch (InterruptedException e) {
-                System.out.printf("Thread %s interrupted \n" + Thread.currentThread().getName());
-                maxLength = -1;
-            }
-            System.out.printf("Максимальное количество символов %s в тексте %d \n", letter, maxLength);
+            countLetter(maxB,'b');
         });
 
         Thread threadC = new Thread(() -> {
-            char letter = 'c';
-            long maxLength;
-            try {
-                maxLength = findLetter(maxC, letter);
-            } catch (InterruptedException e) {
-                System.out.printf("Thread %s interrupted \n" + Thread.currentThread().getName());
-                maxLength = -1;
-            }
-            System.out.printf("Максимальное количество символов %s в тексте %d \n", letter, maxLength);
+            countLetter(maxC,'c');
         });
 
         threadA.start();
@@ -90,5 +66,16 @@ public class Main {
             text.append(letters.charAt(random.nextInt(letters.length())));
         }
         return text.toString();
+    }
+
+    public static void countLetter (ArrayBlockingQueue maxLetter, char letter) {
+        long maxLength;
+        try {
+            maxLength = findLetter(maxLetter, letter);
+        } catch (InterruptedException e) {
+            System.out.printf("Thread %s interrupted \n" + Thread.currentThread().getName());
+            maxLength = -1;
+        }
+        System.out.printf("Максимальное количество символов %s в тексте %d \n", letter, maxLength);
     }
 }
